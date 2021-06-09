@@ -10,9 +10,9 @@ namespace Race
     /// </summary>
     public class PowerupCoolant : Powerup
     {
-        public override void OnPickedByPlayer()
+        public override void OnPickedByBike(Bike bike)
         {
-
+            bike.CoolAfterburner();
         }
     }
 }
