@@ -28,6 +28,17 @@ namespace Race
         public abstract Vector3 GetPosition(float distance);
 
         /// <summary>
+        /// ћетод возвращает вращение в 3д кривой цетральной линии трубы
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <returns></returns>
+        public virtual Quaternion GetRotation(float distance)
+        {
+            return Quaternion.identity;
+        }
+
+
+        /// <summary>
         /// ћетод возвращает направление в 3д кривой цетральной линии трубы.
         ///  асательна€ кривой в точке.
         /// </summary>
