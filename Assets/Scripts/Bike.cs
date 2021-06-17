@@ -169,6 +169,13 @@ namespace Race
             }
         }
 
+        /// <summary>
+        /// ¬озвращает нормализованное значение скорости
+        /// </summary>
+        public float GetNormalizedSpeed ()
+        {
+            return Mathf.Clamp01(_velocity / _bikeParametersInitial.MaxSpeed);
+        }
 
 
         private void UpdateBikePhysics()
