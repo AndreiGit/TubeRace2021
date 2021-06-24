@@ -23,7 +23,11 @@ namespace Race
         {
             _activeBike.SetForwardThrustAxis(0);
             _activeBike.SetHorizontalThrustAxis(0);
-           
+
+            if (!_activeBike.IsMovementControlsActive)
+            {
+                return;
+            }
 
             if(Input.GetKey(KeyCode.W))
             {

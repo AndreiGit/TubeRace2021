@@ -63,6 +63,9 @@ namespace Race
 
     public class Bike : MonoBehaviour
     {
+        [SerializeField] private bool _isPlayerBike;
+        public bool IsplayerBike => _isPlayerBike;
+
         [SerializeField] private BikeParameters _bikeParametersInitial;
 
         [SerializeField] private BikeViewController _visualController;
@@ -97,6 +100,8 @@ namespace Race
 
         [SerializeField] private RaceTrack _track;
         public RaceTrack Track => _track;
+
+        public bool IsMovementControlsActive { get; set; }
 
         private float _distance;
         private float _velocity;
@@ -208,6 +213,11 @@ namespace Race
 
             _velocity += dv;
 
+            if(_bikeStatistics.TopSpeed < Mathf.Abs(_velocity))
+            {
+                _bikeStatistics.TopSpeed = _velocity;
+            }
+
             _rollAngle += da;
 
            // _velocity = Mathf.Clamp(_velocity, -_bikeParametersInitial.MaxSpeed, _bikeParametersInitial.MaxSpeed);
@@ -297,6 +307,65 @@ namespace Race
             _fuel -= amount;
 
             return true;
+        }
+
+        public class BikeStatistics
+        {
+            public float TopSpeed;
+            public float TotalTime;
+            public int RacePlace;
+            public float BestLapTime;
+        }
+
+        private BikeStatistics _bikeStatistics;
+        public BikeStatistics Statistics => _bikeStatistics;
+
+        private void Awake()
+        {
+            _bikeStatistics = new BikeStatistics();
+        }
+
+        private float _raceStartTime;
+        private float _raceLapTime;
+
+        /// <summary>
+        /// Сообщаем байку о старте гонки
+        /// </summary>
+        public void OnRaceStart()
+        {
+            _raceStartTime = Time.time;
+            _raceLapTime = Time.time;
+        }
+
+        /// <summary>
+        /// Проверка на лучший круг
+        /// </summary>
+        public void OnBestLapCheck()
+        {
+            float lapTime = Time.time - _raceLapTime;
+            Debug.Log("Текущий - " + lapTime);
+            _raceLapTime = Time.time;
+
+            if(_bikeStatistics.BestLapTime == 0)
+            {
+                _bikeStatistics.BestLapTime = lapTime;
+            }
+
+            if (lapTime< _bikeStatistics.BestLapTime)
+            {
+                _bikeStatistics.BestLapTime = lapTime;
+                Debug.Log("Лучший - " + _bikeStatistics.BestLapTime);
+            }
+        }
+
+        /// <summary>
+        /// Сообщаем байку об окончании гонки
+        /// </summary>
+        public void OnRaceEnd()
+        {
+            _bikeStatistics.TotalTime = Time.time - _raceStartTime;
+
+            Debug.Log($"{ _bikeStatistics.RacePlace } |{ _bikeStatistics.TotalTime } | {_bikeStatistics.TopSpeed} | {_bikeStatistics.BestLapTime}");
         }
 
         //старый вариант
