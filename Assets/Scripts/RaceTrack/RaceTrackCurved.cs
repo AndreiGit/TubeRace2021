@@ -50,6 +50,7 @@ namespace Race
         [Header("Отрисовка в редакторе сгенерированных точек")]
         [SerializeField] private bool _debugDrawSampledPoints;
 
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if(_debugDrawBezier)
@@ -114,6 +115,11 @@ namespace Race
                         _trackSampledLength += segmentLength;
                     }
                 }
+                //сохранение длины трэка
+                PlayerPrefs.SetFloat("TrackSampledLength", _trackSampledLength);
+                PlayerPrefs.Save();
+
+                //Debug.Log("Тест загрузка - "+PlayerPrefs.GetFloat("TrackSampledLength"));
 
                 // сообщение редактору что скрипт изменен
                 EditorUtility.SetDirty(this);
@@ -196,7 +202,7 @@ namespace Race
                 Texture2D.whiteTexture,
                 1.0f);
         }
-
+#endif
         public override Vector3 GetDirection(float distance)
         {
             distance = Mathf.Repeat(distance, _trackSampledLength);

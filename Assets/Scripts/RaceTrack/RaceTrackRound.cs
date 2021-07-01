@@ -49,7 +49,7 @@ namespace Race
 
         [Header("Отрисовка в редакторе сгенерированных точек")]
         [SerializeField] private bool _debugDrawSampledPoints;
-
+#if UNITY_EDITOR
         private void OnDrawGizmos()
         {
             if (_debugDrawRound)
@@ -155,7 +155,7 @@ namespace Race
             Handles.DrawAAPolyLine(_trackSampledPoints);
         }
 
-
+#endif
         public override Quaternion GetRotation(float distance)
         {
             distance = Mathf.Repeat(distance, _trackSampledLength);

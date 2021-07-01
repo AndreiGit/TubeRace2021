@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Race
 {
@@ -26,6 +27,11 @@ namespace Race
             _totalTime.text ="Time: "+ stats.TotalTime.ToString()+" seconds";
             _bestLap.text = "BestLap:" + stats.BestLapTime.ToString() + " seconds";
 
+        }
+
+        public void OnButtonQuit()
+        {
+            SceneManager.LoadScene(PauseViewController.MainMenuScene);
         }
     }
 }
