@@ -63,6 +63,9 @@ namespace Race
 
     public class Bike : MonoBehaviour
     {
+        [SerializeField] private AnimationCurve _collisionVolumeCurve;
+        [SerializeField] private AudioSource _collisionSfx;
+
         [SerializeField] private bool _isPlayerBike;
         public bool IsplayerBike => _isPlayerBike;
 
@@ -227,12 +230,15 @@ namespace Race
             //collision
             if(Physics.Raycast(transform.position, transform.forward, dS))
             {
+                _collisionSfx.volume = _collisionVolumeCurve.Evaluate(GetNormalizedSpeed());
+                _collisionSfx.Play();
+
                 //Приращение температуры при столкновении
                 _afterburnerHeat += _bikeParametersInitial.HeatCollision;
 
                 _velocity = - _velocity * _bikeParametersInitial.CollisionBounceFactor;
                 dS = _velocity * dt;
-                
+              
             }
 
             _prevDistance = _distance;
