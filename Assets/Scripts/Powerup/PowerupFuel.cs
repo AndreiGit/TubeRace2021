@@ -15,6 +15,7 @@ namespace Race
         public override void OnPickedByBike(Bike bike)
         {
             bike.AddFuel(_fuelAmount);
+            Destroy(gameObject);
         }
     }
 }

@@ -95,8 +95,8 @@ namespace Race
             _rollIndicatorMin.position = transform.position;
             _rollIndicatorMax.position = transform.position;
 
-            _rollIndicatorMin.transform.rotation = Quaternion.Euler(0,0, _rollAngleMin);
-            _rollIndicatorMax.transform.rotation = Quaternion.Euler(0, 0, _rollAngleMax);
+            _rollIndicatorMin.transform.rotation = Quaternion.Euler(this.transform.localRotation.eulerAngles.x, this.transform.localRotation.eulerAngles.y, _rollAngleMin);
+            _rollIndicatorMax.transform.rotation = Quaternion.Euler(this.transform.localRotation.eulerAngles.x, this.transform.localRotation.eulerAngles.y, _rollAngleMax);
         }
     }
 }
